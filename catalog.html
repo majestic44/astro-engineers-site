@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Astro Engineers — Catalog</title>
+  <meta name="description" content="Astro Engineers — Dual Universe. Industry builds, ship sales, and delivery services." />
+  <link rel="stylesheet" href="assets/css/site.css" />
+  <script defer src="assets/js/site.js"></script>
+</head>
+<body>
+  <div class="appbar">
+    <div class="left">CATALOG</div>
+    <div class="divider"></div>
+    <div class="center">
+      <span class="spark">✦</span>
+      <span>Astro Engineers</span>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <div class="stage">
+    <section class="window">
+      <div class="frame">
+        <div class="hero" aria-hidden="true"></div>
+
+        <div class="content">
+          <div class="tabs" aria-label="Site navigation">
+            <a class="tab" href="index.html">Home</a>
+            <a class="tab" href="manifesto.html">Manifesto</a>
+            <a class="tab" href="catalog.html">Catalog</a>
+            <a class="tab" href="services.html">Services</a>
+            <a class="tab" href="contact.html">Contact</a>
+          </div>
+          <div class="chips">
+            <span class="chip">Offerings</span>
+            <span class="chip">Standard Packages</span>
+            <span class="chip">Custom Builds</span>
+          </div>
+
+          <div class="headlineRow">
+            <div>
+              <h1>Catalog</h1>
+              <p class="desc">Baseline offerings and availability. Edit <span class="tag">assets/data/catalog.json</span> to update.</p>
+            </div>
+            <div class="badge">Draft</div>
+          </div>
+
+          <!-- Filters -->
+<section class="card" style="grid-column: 1 / -1;">
+  <h2>Filters</h2>
+
+  <div class="pillRow" id="catFilters" aria-label="Category filters">
+    <span class="pill active" data-cat="All">All</span>
+    <span class="pill" data-cat="Factory">Factory</span>
+    <span class="pill" data-cat="Ships">Ships</span>
+    <span class="pill" data-cat="Other">Other</span>
+  </div>
+
+  <div class="pillRow" id="typeFilters" aria-label="Type filters" style="margin-top:10px;">
+    <span class="pill active" data-type="All">All</span>
+    <span class="pill" data-type="Static">Static</span>
+    <span class="pill" data-type="Space">Space</span>
+    <span class="pill" data-type="Dynamic">Dynamic</span>
+  </div>
+</section>
+
+
+
+          <div class="grid" id="catalogGrid">
+            <section class="card">
+              <h2>Loading…</h2>
+              <p class="desc">Fetching catalog data.</p>
+            </section>
+          </div>
+
+          <script defer src="assets/js/catalog.js"></script>
+
+          <div class="footer">
+            <div>Astro Engineers • Dual Universe</div>
+            <div>Site v1.0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

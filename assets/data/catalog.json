@@ -1,0 +1,65 @@
+{
+  "items": [
+    {
+      "name": "Industrial Starter Hub",
+      "category": "Factory",
+      "type": "Static",
+      "tier": "Standard",
+      "leadTime": "2\u20134 days",
+      "notes": "Compact baseline industry layout. Expandable footprint.",
+      "status": "Available",
+      "priceBlueprintQuanta": null
+    },
+    {
+      "name": "Industrial Starter Hub",
+      "category": "Factory",
+      "type": "Space",
+      "tier": "Standard",
+      "leadTime": "2\u20134 days",
+      "notes": "Compact baseline industry layout. Expandable footprint.",
+      "status": "Available",
+      "priceTokenQuanta": 60000000
+    },
+    {
+      "name": "Freight-Ready Factory Pad",
+      "category": "Factory",
+      "type": "Static",
+      "tier": "Standard",
+      "leadTime": "3\u20136 days",
+      "notes": "Optimized for throughput and logistics. Includes pad staging.",
+      "status": "Available",
+      "priceBlueprintQuanta": 18500000,
+      "priceTokenQuanta": 52000000
+    },
+    {
+      "name": "Utility Hauler",
+      "category": "Ships",
+      "type": "Dynamic",
+      "tier": "Standard",
+      "leadTime": "1\u20133 days",
+      "notes": "Mid-volume hauling platform; configurable containers.",
+      "status": "Limited",
+      "priceTokenQuanta": 95000000
+    },
+    {
+      "name": "PLACO - Market Runner",
+      "category": "Ships",
+      "type": "coming-soon",
+      "tier": "Standard",
+      "leadTime": "1\u20133 days",
+      "notes": "Mid-volume hauling platform; configurable containers.",
+      "status": "Limited",
+      "priceTokenQuanta": 0
+    },
+    {
+      "name": "Letters and More!",
+      "category": "Other",
+      "type": "Library",
+      "tier": "Standard",
+      "leadTime": "1\u20133 days",
+      "notes": "Voxel Library of Letters, Numbers, and Symbols for your builds.",
+      "status": "Available",
+      "priceTokenQuanta": 500000
+    }
+  ]
+}

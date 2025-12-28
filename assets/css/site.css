@@ -1,0 +1,650 @@
+/* =========================================================
+   Astro Engineers — site.css (cleaned)
+   Layout mode: Fixed header + fixed background + scrolling content
+   Notes:
+   - Header is fixed to absolute top (54px)
+   - Background layers are fixed and begin below header
+   - Only .stage scrolls (body does not scroll)
+   - Optional: add <body class="fit"> for compact/auto-fit behavior
+   ========================================================= */
+
+/* -----------------------------
+   Design tokens
+------------------------------ */
+:root{
+  --appbar:#0b1721;
+  --backdrop:#050914;
+
+  --panelOuter: rgba(10,16,30,.78);
+  --panelInner: rgba(10,16,30,.52);
+
+  --card: rgba(18,26,44,.62);
+  --text:#E9EDF7;
+  --muted:#AAB4D6;
+
+  --line: rgba(255,255,255,.10);
+  --line2: rgba(255,255,255,.14);
+
+  --accent:#67B3FF;          /* electric blue */
+  --accentGlow: rgba(103,179,255,.22);
+
+  --shadow: rgba(0,0,0,.55);
+  --r: 18px;
+  --r2: 22px;
+
+  --headerH: 54px;
+}
+
+/* -----------------------------
+   Base / reset
+------------------------------ */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica;
+  color: var(--text);
+
+  /* The page itself does NOT scroll; .stage does. */
+  overflow: hidden;
+
+  /* Base backdrop (under the emblem) */
+  background:
+    radial-gradient(1200px 700px at 50% 18%, rgba(103,179,255,.12), transparent 65%),
+    var(--backdrop);
+
+  position: relative;
+}
+
+/* =========================================================
+   Fixed global background (STATIC)
+   - Starts BELOW the header so the header sits at absolute top
+   ========================================================= */
+
+/* Emblem layer */
+body::before{
+  content:"";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--headerH);
+  bottom: 0;
+  z-index: 0;
+
+  background-image: url("../img/emblem.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;           /* full-page coverage */
+
+  /* Tune to taste */
+  opacity: 0.75;
+  filter: saturate(1.10) contrast(1.15) brightness(1.15);
+
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* Atmosphere / vignette layer */
+body::after{
+  content:"";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--headerH);
+  bottom: 0;
+  z-index: 1;
+
+  background:
+    radial-gradient(900px 600px at 50% 40%, rgba(103,179,255,.12), transparent 60%),
+    radial-gradient(1400px 900px at 50% 50%, rgba(0,0,0,.18), rgba(0,0,0,.55));
+
+  opacity: .65; /* prevents crushing the emblem */
+  pointer-events:none;
+}
+
+/* =========================================================
+   Header (FIXED to absolute top)
+   ========================================================= */
+.appbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--headerH);
+  z-index: 1000;
+
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)) , var(--appbar);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+
+  display:flex;
+  align-items:center;
+  padding: 0 16px;
+  gap: 12px;
+
+  backdrop-filter: blur(10px);
+}
+
+.appbar .left{
+  font-weight: 800;
+  letter-spacing: .14em;
+  font-size: 14px;
+  text-transform: uppercase;
+  opacity:.95;
+}
+
+.appbar .divider{
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,.14);
+  margin: 0 6px;
+}
+
+.appbar .center{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color: rgba(233,237,247,.92);
+  font-weight: 650;
+  letter-spacing: .02em;
+}
+
+.spark{
+  width: 18px; height: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.20);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color: rgba(233,237,247,.85);
+  font-size: 12px;
+}
+
+/* =========================================================
+   Scroll container (ONLY THIS SCROLLS)
+   ========================================================= */
+.stage{
+  position: relative;
+  z-index: 10;
+
+  margin-top: var(--headerH);
+  height: calc(100vh - var(--headerH));
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+
+  padding: 24px 18px 48px;
+}
+
+/* =========================================================
+   Window / frame shell
+   - Content-aware (grows) while still centered in .stage
+   ========================================================= */
+.window{
+  width: min(1180px, 94vw);
+  height: auto;
+  border-radius: var(--r2);
+
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0)) , rgba(6,10,20,.75);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 26px 120px var(--shadow);
+
+  position:relative;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.frame{
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)) , var(--panelOuter);
+  padding: 18px;
+
+  position:relative;
+  overflow: hidden;
+}
+
+/* Subtle inner glow/vignette in the frame (no emblem here) */
+.hero{
+  position:absolute;
+  inset: -40px;
+  background: none;
+  pointer-events:none;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(520px 520px at 50% 52%, rgba(103,179,255,.12), transparent 60%),
+    radial-gradient(1100px 700px at 50% 50%, rgba(0,0,0,.10), rgba(0,0,0,.44));
+  opacity: .85;
+}
+
+/* =========================================================
+   Content layout
+   ========================================================= */
+.content{
+  position:relative;
+  z-index: 2;
+
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+/* chip row */
+.chips{
+  display:flex;
+  gap: 10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.chip{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.02);
+  color: rgba(233,237,247,.88);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space:nowrap;
+}
+
+.pillRow{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.pill{
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  color: rgba(233,237,247,.90);
+  font-size: 11px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pill.active{
+  border-color: rgba(103,179,255,.45);
+  background: rgba(103,179,255,.12);
+}
+
+
+
+/* Page tabs */
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin: 4px 0 14px;
+}
+
+.tab{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.05);
+  color: rgba(233,237,247,.88);
+  text-decoration:none;
+  font-size: 12px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  transition: background .2s ease, border-color .2s ease, transform .06s ease;
+}
+
+.tab:hover{
+  border-color: rgba(103,179,255,.35);
+  background: rgba(103,179,255,.08);
+  transform: translateY(-1px);
+}
+
+.tab.active{
+  border-color: rgba(103,179,255,.45);
+  background: rgba(103,179,255,.12);
+  color: rgba(233,237,247,.92);
+}
+
+/* header row inside the window */
+.headlineRow{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+h1{
+  margin: 0;
+  font-size: 36px;
+  letter-spacing: -.02em;
+  font-weight: 800;
+}
+
+.desc{
+  margin: 10px 0 0;
+  max-width: 86ch;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ===== Catalog category + type tags ===== */
+
+.metaRow{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin: 6px 0 2px;
+}
+
+.catTag{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  font-size: 11px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+.typeTag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 11px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+.typeTag::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+}
+
+/* Static */
+.typeTag.static{
+  border-color: rgba(255,211,122,.35);
+  background: rgba(255,211,122,.12);
+}
+.typeTag.static::before{
+  background: rgba(255,211,122,.95);
+}
+
+/* Space */
+.typeTag.space{
+  border-color: rgba(98, 0, 117, 0.4);
+  background: rgba(172, 1, 252, 0.14);
+}
+.typeTag.space::before{
+  background: rgba(183, 0, 255, 0.95);
+}
+
+/* Dynamic */
+.typeTag.dynamic{
+  border-color: rgba(2, 41, 214, 0.4);
+  background: rgba(4, 113, 255, 0.14);
+}
+.typeTag.dynamic::before{
+  background: rgba(0, 153, 255, 0.95);
+}
+
+/* Coming Soon */
+.typeTag.coming-soon{
+  border-color: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 136, 1, 0.14);
+}
+.typeTag.coming-soon::before{
+  background: rgba(232, 248, 3, 0.95);
+}
+
+/* Library */
+.typeTag.library{
+  border-color: rgba(62, 218, 0, 0.4);
+  background: rgba(0, 255, 13, 0.14);
+}
+.typeTag.library::before{
+  background: rgba(1, 240, 13, 0.95);
+}
+
+
+/* grid */
+.grid{
+  display:grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 14px;
+  align-items: stretch;
+  align-content: start;
+}
+
+.card{
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)) , var(--card);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 16px 70px rgba(0,0,0,.35);
+  padding: 16px 16px 14px;
+  position:relative;
+  overflow:hidden;
+  margin: 0;
+  min-width: 0;
+}
+
+/* accent stroke */
+.card::before{
+  content:"";
+  position:absolute;
+  left: 16px;
+  top: 14px;
+  width: 78px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 22px var(--accentGlow);
+  opacity: .85;
+}
+
+.card h2{
+  margin: 10px 0 10px;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.card p, .card li{
+  color: rgba(170,180,214,.95);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.list{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.list li{ margin: 7px 0; }
+
+.rightCol{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+/* KPI grid */
+.kpiGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.kpi{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(10,16,30,.45);
+  padding: 10px 10px 9px;
+}
+
+.kpi .label{
+  color: rgba(170,180,214,.85);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.kpi .value{
+  color: rgba(233,237,247,.94);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.priceRow{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.priceBox{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(10,16,30,.45);
+  padding: 10px 10px 9px;
+}
+
+.priceBox .label{
+  color: rgba(170,180,214,.85);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.priceBox .value{
+  color: rgba(233,237,247,.94);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ============================
+   Quanta icon appended to prices
+   ============================ */
+.qicon{
+  width: 19px;
+  height: 19px;
+  margin-left: 6px;
+  vertical-align: -2px;
+  opacity: .92;
+  filter: drop-shadow(0 0 10px rgba(103,179,255,.20));
+}
+
+@keyframes qspin{
+  to { transform: rotate(360deg); }
+}
+
+.qicon.spin{
+  animation: qspin 5.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .qicon.spin{ animation: none; }
+}
+
+.sectionTitle{
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.contactLine{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin: 8px 0;
+  color: rgba(170,180,214,.95);
+  font-size: 13px;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: rgba(233,237,247,.92);
+  width: fit-content;
+}
+
+.dot{
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: rgba(255,211,122,.95);
+  box-shadow: 0 0 16px rgba(255,211,122,.18);
+}
+
+.footer{
+  color: rgba(170,180,214,.75);
+  font-size: 11px;
+  display:flex;
+  justify-content:space-between;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  padding-top: 10px;
+  margin-top: 24px;
+}
+
+.content a{ color: inherit; text-underline-offset: 3px; }
+
+/* =========================================================
+   Optional compact/auto-fit mode (per-page)
+   Apply by adding: <body class="fit">
+   ========================================================= */
+body.fit .window{
+  max-width: min(1180px, 94vw);
+}
+
+body.fit h1{
+  font-size: clamp(26px, 3.1vw, 38px);
+}
+
+body.fit .desc{
+  font-size: clamp(12px, 1.1vw, 14px);
+  line-height: 1.35;
+  margin-top: 8px;
+}
+
+body.fit .card p,
+body.fit .card li{
+  font-size: clamp(12px, 1.0vw, 13px);
+  line-height: 1.32;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 980px){
+  .stage{ padding: 16px 12px 32px; }
+  .grid{ grid-template-columns: 1fr; }
+}

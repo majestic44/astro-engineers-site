@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#7fb8ff" stop-opacity="0.22"/>
+      <stop offset="55%" stop-color="#0b1721" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#050915" stop-opacity="0.85"/>
+    </radialGradient>
+    <linearGradient id="s" x1="0" x2="1">
+      <stop offset="0" stop-color="#a6c8ff" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#67b3ff" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#g)"/>
+  <g fill="none" stroke="url(#s)" stroke-width="10" opacity="0.8">
+    <circle cx="600" cy="600" r="420"/>
+    <circle cx="600" cy="600" r="300" opacity="0.65"/>
+    <circle cx="600" cy="600" r="180" opacity="0.5"/>
+  </g>
+  <g fill="#e9edf7" opacity="0.85" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" text-anchor="middle">
+    <text x="600" y="560" font-size="64" letter-spacing="6">ASTRO</text>
+    <text x="600" y="640" font-size="34" opacity="0.85" letter-spacing="4">ENGINEERS</text>
+    <text x="600" y="700" font-size="18" opacity="0.70" letter-spacing="3">Replace this with your emblem image</text>
+  </g>
+</svg>

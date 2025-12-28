@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "name": "Industrial Starter Hub",
+      "category": "Factory",
+      "type": "Static",
+      "tier": "Standard",
+      "leadTime": "2–4 days",
+      "notes": "Compact baseline industry layout. Expandable footprint.",
+      "status": "Available"
+    },
+    {
+      "name": "Industrial Starter Hub",
+      "category": "Factory",
+      "type": "Space",
+      "tier": "Standard",
+      "leadTime": "2–4 days",
+      "notes": "Compact baseline industry layout. Expandable footprint.",
+      "status": "Available"
+    },
+    {
+      "name": "Freight-Ready Factory Pad",
+      "category": "Factory",
+      "type": "Static",
+      "tier": "Standard",
+      "leadTime": "3–6 days",
+      "notes": "Optimized for throughput and logistics. Includes pad staging.",
+      "status": "Available"
+    },
+    {
+      "name": "Utility Hauler",
+      "category": "Ships",
+      "type": "Dynamic",
+      "tier": "Standard",
+      "leadTime": "1–3 days",
+      "notes": "Mid-volume hauling platform; configurable containers.",
+      "status": "Limited"
+    }
+  ]
+}

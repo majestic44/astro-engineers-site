@@ -1,0 +1,583 @@
+
+    :root{
+      --appbar:#0b1721;
+      --backdrop:#050914;
+
+      --panelOuter: rgba(10,16,30,.78);
+      --panelInner: rgba(10,16,30,.52);
+
+      --card: rgba(18,26,44,.62);
+      --text:#E9EDF7;
+      --muted:#AAB4D6;
+
+      --line: rgba(255,255,255,.10);
+      --line2: rgba(255,255,255,.14);
+
+      --accent:#67B3FF;      /* electric blue */
+      --accentGlow: rgba(103,179,255,.22);
+
+      --shadow: rgba(0,0,0,.55);
+      --r: 18px;
+      --r2: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica;
+      background: radial-gradient(1200px 700px at 50% 18%, rgba(103,179,255,.12), transparent 65%), var(--backdrop);
+      color: var(--text);
+      overflow:hidden;
+    }
+    /* ===== Global page background emblem ===== */
+body{
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* emblem layer */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;                 /* ✅ was -80px */
+  z-index: 0;
+
+  background-image: url("../img/emblem.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;   /* ✅ fill the entire screen */
+
+  opacity: 0.85;            /* tune as needed */
+  filter: saturate(1.10) contrast(1.15) brightness(1.15);
+
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* atmosphere / vignette layer */
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: 1;  /* ✅ was -1 */
+
+  background:
+    radial-gradient(900px 600px at 50% 40%, rgba(103,179,255,.14), transparent 60%),
+    radial-gradient(1400px 900px at 50% 50%, rgba(0,0,0,.25), rgba(0,0,0,.70));
+  opacity: 0;
+
+  pointer-events:none;
+}
+
+    /* ===== Top bar like the reference ===== */
+    .appbar{
+      height: 54px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)) , var(--appbar);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .appbar, .stage{
+      position: relative;
+      z-index: 5; /* ✅ ensures UI is above body::before/body::after */
+    }
+    .appbar .left{
+      font-weight: 800;
+      letter-spacing: .14em;
+      font-size: 14px;
+      text-transform: uppercase;
+      opacity:.95;
+    }
+    .appbar .divider{
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,.14);
+      margin: 0 6px;
+    }
+    .appbar .center{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: rgba(233,237,247,.92);
+      font-weight: 650;
+      letter-spacing: .02em;
+    }
+    .spark{
+      width: 18px; height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.20);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(233,237,247,.85);
+      font-size: 12px;
+    }
+
+    /* ===== The “window” area ===== */
+    .stage{
+      height: calc(100% - 54px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+
+    .window{
+      width: min(1180px, 94vw);
+      height: min(760px, 86vh);
+      border-radius: var(--r2);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0)) , rgba(6,10,20,.75);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 26px 120px var(--shadow);
+      position:relative;
+      padding: 18px;
+      overflow:hidden;
+    }
+
+    /* inner rounded frame like the reference */
+    .frame{
+      height: 100%;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)) , var(--panelOuter);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* hero emblem watermark */
+    .hero{
+  position:absolute;
+  inset: -40px -40px -40px -40px;
+
+  /* no image here anymore */
+  background: none;
+  opacity: 1;
+  filter: none;
+
+  transform: translateZ(0);
+  pointer-events:none;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(520px 520px at 50% 52%, rgba(103,179,255,.12), transparent 60%),
+    radial-gradient(1100px 700px at 50% 50%, rgba(0,0,0,.10), rgba(0,0,0,.44));
+  opacity: .85;
+}
+
+    /* content plane above hero */
+    .content{
+      position:relative;
+      z-index: 2;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      min-height: 0;          /* allows children to size correctly */
+    }
+
+    /* chip row */
+    .chips{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
+    }
+    .chip{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.02);
+      color: rgba(233,237,247,.88);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      white-space:nowrap;
+    }
+
+    /* header row inside the window */
+    .headlineRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    h1{
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: -.02em;
+      font-weight: 800;
+    }
+    .desc{
+      margin: 10px 0 0;
+      max-width: 86ch;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    /* card grid like the reference: 2 columns, then a wide contact block */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 14px;
+
+      /* deterministic row sizing + stable alignment */
+      grid-auto-rows: minmax(0, auto);
+      align-items: stretch;
+      align-content: start;
+
+      flex: 1 1 auto;         /* grid consumes remaining vertical space */
+      min-height: 0;
+    }
+
+    .card{
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)) , var(--card);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 16px 70px rgba(0,0,0,.35);
+      padding: 16px 16px 14px;
+      position:relative;
+      overflow:hidden;
+      margin: 0;              /* prevents margin artifacts */
+      min-width: 0;           /* prevents overflow pushing layout */
+    }
+
+    /* thin accent stroke similar to the neon feel */
+    .card::before{
+      content:"";
+      position:absolute;
+      left: 16px;
+      top: 14px;
+      width: 78px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 22px var(--accentGlow);
+      opacity: .85;
+    }
+
+    .card h2{
+      margin: 10px 0 10px;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .card p, .card li{
+      color: rgba(170,180,214,.95);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .list{
+      margin: 0;
+      padding-left: 18px;
+    }
+    .list li{ margin: 7px 0; }
+
+    .rightCol{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      min-height: 0;          /* important inside fixed-height containers */
+    }
+
+    /* Quick profile mini-cards like your reference */
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .kpi{
+        height: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(10,16,30,.45);
+      padding: 10px 10px 9px;
+    }
+    .kpi .label{
+      color: rgba(170,180,214,.85);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .kpi .value{
+      color: rgba(233,237,247,.94);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .sectionTitle{
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .contactLine{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin: 8px 0;
+      color: rgba(170,180,214,.95);
+      font-size: 13px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(233,237,247,.92);
+      width: fit-content;
+    }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: rgba(255,211,122,.95);
+      box-shadow: 0 0 16px rgba(255,211,122,.18);
+    }
+
+    .footer{
+      color: rgba(170,180,214,.75);
+      font-size: 11px;
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding-top: 10px;
+      margin-top: auto;       /* pins footer to bottom */
+    }
+
+    @media (max-width: 980px){
+      body{ overflow:auto; }
+      .window{ height:auto; }
+      .grid{ grid-template-columns: 1fr; }
+      .rightCol{ flex-direction:column; }
+    }
+    
+    /* =========================================================
+   COMPACT FIT MODE — Target: 946 x 709 (no scroll)
+   Paste at END of stylesheet to override earlier rules.
+   ========================================================= */
+
+/* If your container is EXACTLY 946x709, this keeps it locked */
+/* ===== Fixed-size fit: 946x709 ===== */
+/* ===== Fixed-size fit: 946x709 ===== */
+
+    /* --- Page tabs (styled like original chips) --- */
+    .tabs{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin: 4px 0 14px;
+    }
+    .tab{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: rgba(233,237,247,.88);
+      text-decoration:none;
+      font-size: 12px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      transition: background .2s ease, border-color .2s ease, transform .06s ease;
+    }
+    .tab:hover{
+      border-color: rgba(103,179,255,.35);
+      background: rgba(103,179,255,.08);
+      transform: translateY(-1px);
+    }
+    .tab.active{
+      border-color: rgba(103,179,255,.45);
+      background: rgba(103,179,255,.12);
+      color: rgba(233,237,247,.92);
+    }
+
+    /* content links */
+    .content a{ color: inherit; text-underline-offset: 3px; }
+
+    /* =========================================================
+   AUTO-FIT MODE — keeps content inside the window/frame
+   Apply by adding: <body class="fit">
+   ========================================================= */
+
+body.fit .stage{
+  height: calc(100vh - 54px);   /* match appbar */
+}
+
+body.fit .window{
+  height: min(760px, 86vh);     /* keep your existing cap */
+  overflow: hidden;             /* no outer scrollbars */
+}
+
+body.fit .frame{
+  height: 100%;
+  overflow: hidden;             /* lock the frame */
+}
+
+/* Make the content a true vertical layout that can shrink */
+body.fit .content{
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs + chips should not force layout growth */
+body.fit .tabs,
+body.fit .chips{
+  flex: 0 0 auto;
+}
+
+/* The MAIN area should consume remaining space */
+body.fit .grid{
+  flex: 1 1 auto;
+  min-height: 0;
+
+  /* Prevent grid from causing overflow */
+  align-content: start;
+  align-items: stretch;
+}
+
+/* Cards must be allowed to shrink */
+body.fit .card{
+  min-height: 0;
+}
+
+/* Prevent text from forcing overflow */
+body.fit h1{
+  font-size: clamp(26px, 3.1vw, 38px);
+}
+
+body.fit .desc{
+  font-size: clamp(12px, 1.1vw, 14px);
+  line-height: 1.35;
+  margin-top: 8px;
+}
+
+/* Lists shrink and wrap cleanly */
+body.fit .card p,
+body.fit .card li{
+  font-size: clamp(12px, 1.0vw, 13px);
+  line-height: 1.32;
+}
+
+body.fit .list{
+  padding-left: 16px;
+}
+
+body.fit .list li{
+  margin: 6px 0;
+}
+
+/* KPI blocks compress */
+body.fit .kpi{
+  padding: 9px 10px 8px;
+}
+
+body.fit .kpi .label{
+  font-size: 9px;
+}
+
+body.fit .kpi .value{
+  font-size: 12.5px;
+}
+
+/* Footer always stays visible */
+body.fit .footer{
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+
+
+/* =========================================================
+   FIXED SHELL + SCROLLING CONTENT MODE
+   Header + background fixed, content scrolls
+   ========================================================= */
+
+/* ---- Lock the page itself ---- */
+html, body{
+  height: 100%;
+}
+
+body{
+  overflow: hidden;           /* page does NOT scroll */
+  padding-top: 54px;          /* reserve space for appbar */
+}
+
+/* ---- Fix the appbar ---- */
+.appbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+}
+
+/* ---- Scroll container ---- */
+.stage{
+  height: calc(100vh - 54px); /* full viewport minus header */
+  overflow-y: auto;           /* ONLY this scrolls */
+  overflow-x: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 24px 18px 48px;
+}
+
+/* ---- Let window grow naturally ---- */
+.window{
+  height: auto !important;    /* override fixed height */
+  max-height: none !important;
+  overflow: visible;
+}
+
+/* ---- Let frame grow naturally ---- */
+.frame{
+  height: auto !important;
+  overflow: visible;
+}
+
+/* ---- Content becomes document-flow ---- */
+.content{
+  height: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Footer behaves like a normal page footer ---- */
+.footer{
+  margin-top: 24px;
+}
+
+/* ---- Background layers stay fixed ---- */
+body::before,
+body::after{
+  position: fixed;
+}
+
+/* ---- Ensure UI is always above background ---- */
+.appbar,
+.stage{
+  position: relative;
+  z-index: 10;
+}
